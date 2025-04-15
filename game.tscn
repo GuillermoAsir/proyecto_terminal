@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnyfgnkbfuxen"]
+[gd_scene load_steps=5 format=3 uid="uid://bnyfgnkbfuxen"]
 
 [ext_resource type="Script" uid="uid://cemyij6msbtc3" path="res://terminal.gd" id="1_80nbo"]
 
@@ -7,6 +7,10 @@ bg_color = Color(0.6, 0.117647, 0.6, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feb5d"]
 bg_color = Color(0.490067, 0.0925016, 0.490379, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80nbo"]
+bg_color = Color(0.43202, 0.0577897, 0.323715, 1)
+draw_center = false
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -39,19 +43,23 @@ bbcode_enabled = true
 scroll_following = true
 
 [node name="NanoPanel" type="Panel" parent="."]
-visible = false
 custom_minimum_size = Vector2(800, 600)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_80nbo")
 
 [node name="Editor" type="TextEdit" parent="NanoPanel"]
+custom_minimum_size = Vector2(800, 600)
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+theme_override_colors/background_color = Color(0.189703, 0.637374, 0.4209, 1)
 
 [node name="GuardarBoton" type="Button" parent="NanoPanel"]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "guardar y salir"
+
+[node name="Mision2Popup" type="Popup" parent="."]

@@ -4,11 +4,13 @@ extends Control
 @onready var nano_panel = $NanoPanel
 @onready var editor = $NanoPanel/Editor
 @onready var save_button = $NanoPanel/GuardarBoton
+@onready var mision2_popup = $Mision2Popup
 
 var current_command = ""
 var current_path = "/"  # Ruta relativa dentro de ubuntu_sim
 const BASE_PATH = "user://ubuntu_sim"  # Ruta real base
 var current_file_being_edited = ""
+var mision2_completada = false
 
 const USER_COLOR = "[color=green]usuario@usuario[/color]"
 const PROMPT_BASE = "$"
@@ -16,6 +18,7 @@ const PROMPT_BASE = "$"
 func _ready():
 	history.bbcode_enabled = true
 	nano_panel.visible = false
+	mision2_popup.visible = false
 	init_structure()
 	show_prompt()
 	save_button.pressed.connect(_on_save_button_pressed)
@@ -35,9 +38,16 @@ func init_structure():
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
+		if nano_panel.visible and editor.has_focus():
+			return
+		if mision2_popup.visible and event.keycode == KEY_ENTER:
+			mision2_popup.visible = false
+			return
+
 		if nano_panel.visible:
 			if event.keycode == KEY_ENTER:
 				return  # Evita procesar comandos mientras estás en nano
+
 		if event.keycode == KEY_ENTER:
 			process_command(current_command.strip_edges())
 			current_command = ""
@@ -95,6 +105,11 @@ func process_command(command: String):
 		else:
 			output = "No se pudo abrir el directorio."
 
+		# Verificamos si se completa la misión 2
+		if current_path == "/home/usuario1/Documents" and not mision2_completada:
+			mision2_completada = true
+			mision2_popup.visible = true
+
 	elif command.begins_with("mkdir "):
 		var target = command.substr(6).strip_edges()
 		var path = get_full_path() + "/" + target
@@ -127,6 +142,8 @@ func process_command(command: String):
 		else:
 			editor.text = ""
 		nano_panel.visible = true
+		history.release_focus()
+		editor.grab_focus()
 		output = "Editando " + filename + " (usa el botón para guardar y salir)"
 
 	elif command.begins_with("rm "):
