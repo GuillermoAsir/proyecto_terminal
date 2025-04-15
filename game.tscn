@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnyfgnkbfuxen"]
+
+[ext_resource type="Script" uid="uid://cemyij6msbtc3" path="res://terminal.gd" id="1_80nbo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2o6t"]
+bg_color = Color(0.6, 0.117647, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feb5d"]
+bg_color = Color(0.490067, 0.0925016, 0.490379, 1)
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_80nbo")
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e2o6t")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="Background/MarginContainer"]
+layout_mode = 2
+
+[node name="GameInfo" type="PanelContainer" parent="Background/MarginContainer/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_feb5d")
+
+[node name="History" type="RichTextLabel" parent="Background/MarginContainer/Rows/GameInfo"]
+custom_minimum_size = Vector2(800, 600)
+layout_mode = 2
+bbcode_enabled = true
+scroll_following = true
+
+[node name="NanoPanel" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(800, 600)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Editor" type="TextEdit" parent="NanoPanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="GuardarBoton" type="Button" parent="NanoPanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "guardar y salir"
